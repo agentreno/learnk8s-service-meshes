@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: envoy-edge
+spec:
+  selector:
+    matchLabels:
+      name: envoy-edge
+  template:
+    metadata:
+      labels:
+        name: envoy-edge
+    spec:
+      containers:
+        - name: container1
+          image: envoyproxy/envoy:v1.12.2
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: envoy-volume
+              mountPath: /etc/envoy
+      volumes:
+        - name: envoy-volume
+          configMap:
+            name: envoy-edge
